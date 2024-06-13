@@ -189,5 +189,6 @@ def delete_book(request):
         latest_books = request.session.get('latest_books', [])
         updated_books = [book for book in latest_books if book['title'] != book_title]
         request.session['latest_books'] = updated_books
+        request.session.modified = True
     return redirect('latest_books')
 
