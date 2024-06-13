@@ -1,0 +1,63 @@
+{% extends 'book/basic.html' %}
+{% block title%} Register {% endblock %}
+{% block body %} 
+<form method="POST" action="{% url 'register' %}" class="register--form">
+    {% csrf_token %}
+        <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+          <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="my-5 display-3 fw-bold ls-tight">
+                  The best place <br />
+                  <span class="text-primary">for your reading needs</span>
+                </h1>
+              </div>
+
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="card">
+                  <div class="card-body py-5 px-md-5">
+                    <form>
+                      <div class="container">
+                      <div class="row">
+                      <div class="col-lg-6 form-outline mb-4">
+                        <input type="text" id="form3Example3" class="form-control" name="first--name"/>
+                        <label class="form-label" for="form3Example3" >First Name</label>
+                      </div>
+                       <div class="col-lg-6 form-outline mb-4">
+                        <input type="text" id="form3Example3" class="form-control" name="last--name"/>
+                        <label class="form-label" for="form3Example3" >Last Name</label>
+                      </div>
+                      <div class="col-lg-6 form-outline mb-4">
+                        <input type="text" id="form3Example3" class="form-control" name="username"/>
+                        <label class="form-label" for="form3Example3" >User Name</label>
+                      </div>
+                      </div>
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <input type="email" id="form3Example3" class="form-control" name="email"/>
+                        <label class="form-label" for="form3Example3" >Email address</label>
+                      </div>
+
+                      <div class="form-outline mb-4">
+                        <input type="password" id="form3Example4" class="form-control" name="password"/>
+                        <label class="form-label" for="form3Example4">Password</label>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary btn-block mb-4">
+                        Sign up
+                      </button>
+                      <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                      </div>
+                       
+                    </form>
+                     
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+    
+    {% endblock %}

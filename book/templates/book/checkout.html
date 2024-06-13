@@ -1,0 +1,94 @@
+{% extends 'book/basic.html' %}
+{% block checkoutactive %} active {% endblock checkoutactive %}
+{% block css %}
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    .total-bill-row {
+        font-weight: bold;
+    }
+{% endblock %}
+{% block body %}
+<div class="container my-3">
+    <h2>Rented Books</h2>
+    
+    {% if rented_books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Rental Date</th>
+                    <th>Return Date</th>
+                    <th>Fee</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in rented_books %}
+                    <tr>
+                        <td>{{ rental.book.title }}</td>
+                        <td>{{ rental.rental_date }}</td>
+                        <td>{{ rental.return_date }}</td>
+                        <td>${{ rental.fee }}</td>
+                        <td>
+                            <form method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="rental_id" value="{{ rental.id }}">
+                                <button class="delete-item btn btn-danger" data-name="Tunic">X</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr class="total-bill-row">
+                    <td colspan="3">Total Bill</td>
+                    <td>${{ total_bill }}</td>
+                    <td>
+                        <form action="{% url 'initiate_payment' %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="amount" value="{{ total_bill }}">
+                            <button type="submit" class="btn btn-primary">Buy</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>No books rented.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

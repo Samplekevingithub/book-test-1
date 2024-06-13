@@ -1,0 +1,76 @@
+{% extends 'book/basic.html' %}
+{% block css %}
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="date"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    {% endblock %}
+{% block body %}
+    <form method="POST" action="{% url 'rental' book.title %}" id="rental-form">
+    {% csrf_token %}
+        <div class="container my-3">
+            <input type="hidden" name="user" value="{{ user.username }}">
+            <input type="hidden" name="book" value="{{ book.title }}">
+        <div class="form-group">
+            <label for="rental_date">Rental Date:</label>
+            <input type="date" id="rental_date" name="rental_date" onchange="calculateFee()"><br><br>
+        </div>
+        <div class="form-group"> 
+            <label for="return_date">Return Date:</label>
+            <input type="date" id="return_date" name="return_date" onchange="calculateFee()"><br><br>
+        </div>
+        <div class="form-group"> 
+            <p>Fee: $<span id="fee">0.00</span></p>
+        </div>  
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}
+{% block js %}
+<script>
+        function calculateFee() {
+            var rentalDate = new Date(document.getElementById("rental_date").value);
+            var returnDate = new Date(document.getElementById("return_date").value);
+            var monthsRented = Math.floor((returnDate - rentalDate) / (1000 * 60 * 60 * 24 * 30));
+            var fee = 0.00;
+        
+            if (monthsRented > 1) {
+                fee = parseFloat('{{ book.page_count }}') / 100 * (monthsRented - 1);
+            }
+        
+            document.getElementById("fee").innerText = fee.toFixed(2);
+        }
+</script>
+    {% endblock%}
+
