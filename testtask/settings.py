@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-z5aif-06%z-@rgv1-s=16-4)60@3g8v-dv8zo%pz=ydv9c--45
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True')=="True"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "book-test-2-8.onrender.com"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "book-test-1.onrender.com"]
 
 # RAZORPAY_API_KEY = "rzp_test_YhfE7ZnBpKrrDq"
 # RAZORPAY_API_SECRET = "t5MRPBtnWi57MoyjDvV7nJQO"
